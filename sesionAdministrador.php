@@ -6,8 +6,11 @@ if(!isset($_SESSION["id"])){
 $id = $_SESSION["id"];
 require ("logica/Persona.php");
 require ("logica/Administrador.php");
+require ("logica/Categoria.php");
+require ("logica/Marca.php");
 $administrador = new Administrador($id);
 $administrador -> consultar();
+
 ?>
 <html>
 <head>
@@ -35,7 +38,7 @@ $administrador -> consultar();
 						href="#" role="button" data-bs-toggle="dropdown"
 						aria-expanded="false">Producto</a>
 						<ul class="dropdown-menu">
-                            <li><a class='dropdown-item' href='#'>Nuevo Producto</a></li>
+                            <li><a class='dropdown-item' href='producto.php'>Nuevo Producto</a></li>
 						</ul></li>
 				</ul>
 				<ul class="navbar-nav">
@@ -58,7 +61,6 @@ $administrador -> consultar();
 					</div>
 					<div class="card-body">
 						<p>Bienvenido administrador <?php echo $administrador -> getNombre() . " " . $administrador -> getApellido() ?></p>
-
 					</div>
 				</div>
 			</div>

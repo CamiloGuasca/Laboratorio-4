@@ -9,6 +9,8 @@ class Producto{
     private $precioCompra;
     private $precioVenta;
     private $marca;
+    private $categoria;
+    private $administrador;
 
     public function getMarca(){
         return $this->marca;
@@ -38,6 +40,10 @@ class Producto{
         return $this->precioVenta;
     }
 
+    public function getAdministrador() {
+        return $this->administrador;
+    }
+
     public function setIdProducto($idProducto){
         $this->idProducto = $idProducto;
     }
@@ -57,14 +63,20 @@ class Producto{
     public function setPrecioVenta($precioVenta){
         $this->precioVenta = $precioVenta;
     }
+
+    public function setAdministrador($administrador){
+        $this->administrador = $administrador;  
+    }
     
-    public function __construct($idProducto=0, $nombre="", $cantidad=0, $precioCompra=0, $precioVenta=0, $marca=null){
+    public function __construct($idProducto=0, $nombre="", $cantidad=0, $precioCompra=0, $precioVenta=0, $marca=null, $categoria = null, $administrador = null){
         $this -> idProducto = $idProducto;
         $this -> nombre = $nombre;
         $this -> cantidad = $cantidad;
         $this -> precioCompra = $precioCompra;
         $this -> precioVenta = $precioVenta;
         $this -> marca = $marca;
+        $this ->categoria = $categoria;
+        $this -> administrador = $administrador;
     }
     
     public function consultarTodos(){
@@ -88,6 +100,22 @@ class Producto{
         }
         $conexion -> cerrarConexion();
         return $productos;        
+    }
+
+    public function registrar(){
+        $productoDAO = new ProductoDAO($this -> idProducto,
+        $this -> nombre,
+        $this -> cantidad,
+        $this -> precioCompra,
+        $this -> precioVenta,
+        $this -> marca,
+        $this->categoria,
+        $this -> administrador);
+
+        $conexion = new Conexion();
+        $conexion -> abrirConexion();
+        $conexion -> ejecutarConsulta($productoDAO->registrar());
+        $conexion -> cerrarConexion();
     }
     
 }
