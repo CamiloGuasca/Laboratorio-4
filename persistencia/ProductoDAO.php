@@ -26,7 +26,7 @@ class ProductoDAO{
 
     public function registrar(){
         return "insert into producto (idProducto, nombre, cantidad, precioCompra, precioVenta, Marca_idMarca, Categoria_idCategoria, Administrador_idAdministrador)
-                values (".$this->idProducto.",".$this->nombre.",".$this->cantidad.",".$this->precioCompra.",".$this->precioVenta.",".$this->idMarca.",".$this->idCategoria.",".$this->idAdministrador.")";
+                values (".$this->idProducto.",'".$this->nombre."',".$this->cantidad.",".$this->precioCompra.",".$this->precioVenta.",".$this->idMarca.",".$this->idCategoria.",".$this->idAdministrador.")";
     }
     
     

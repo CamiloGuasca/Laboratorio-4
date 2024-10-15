@@ -111,7 +111,6 @@ class Producto{
         $this -> marca,
         $this->categoria,
         $this -> administrador);
-
         $conexion = new Conexion();
         $conexion -> abrirConexion();
         $conexion -> ejecutarConsulta($productoDAO->registrar());
@@ -119,5 +118,4 @@ class Producto{
     }
     
 }
-
 ?>

@@ -3,6 +3,7 @@ session_start();
 if(!isset($_SESSION["id"])){
     header("Location: iniciarSesion.php");
 }
+
 $id = $_SESSION["id"];
 require ("logica/Persona.php");
 require ("logica/Administrador.php");
@@ -12,9 +13,9 @@ require ("logica/Producto.php");
 $administrador = new Administrador($id);
 $administrador -> consultar();
 
-if(!isset($_POST["nombre"]) && !isset($_POST["cantidad"]) && !isset($_POST["precioCompra"]) && !isset($_POST["precioVenta"]) && !isset($_POST["marca"]) && !isset($_POST["categoria"])){
-    $uuid = uniqid('', true);
-    $producto = new Producto($uuid, $_POST["nombre"], $_POST["cantidad"], $_POST["precioCompra"], $_POST["precioVenta"], $_POST["marca"], $_POST["categoria"], $administrador->getIdPersona());
+if(isset($_POST["nombre"]) && isset($_POST["id"]) && isset($_POST["cantidad"]) && isset($_POST["precioCompra"]) && isset($_POST["precioVenta"]) && isset($_POST["marca"]) && isset($_POST["categoria"]) ){
+    $producto = new Producto($_POST["id"], $_POST["nombre"], $_POST["cantidad"], $_POST["precioCompra"], $_POST["precioVenta"], $_POST["marca"], $_POST["categoria"], $administrador->getIdPersona());
+    $producto -> registrar();
 }
 ?>
 <html>
@@ -67,6 +68,10 @@ if(!isset($_POST["nombre"]) && !isset($_POST["cantidad"]) && !isset($_POST["prec
 					<div class="card-body mt-4 mb-4 mx-5">
                     <form action="producto.php" method="post">
                         <div class="mb-2">
+                            <label for="id" class="form-label">Id</label>
+                            <input type="text" class="form-control" id="id" name="id" required>
+                        </div>
+                        <div class="mb-2">
                             <label for="nombre" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" required>
                         </div>
@@ -90,20 +95,20 @@ if(!isset($_POST["nombre"]) && !isset($_POST["cantidad"]) && !isset($_POST["prec
                                     $marca = new Marca();
                                     $marcas = $marca->consultarTodos();
                                     foreach ($marcas as $marcaActual) {
-                                        echo "<option value='".$categoriaActual->getIdMarca()."'>".$marcaActual->getNombre()."</option>";
+                                        echo "<option value='".$marcaActual->getIdMarca()."'>".$marcaActual->getNombre()."</option>";
                                     }
                                 ?>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="categoria" class="form-label">Categoria</label>
-                            <select class="form-control" id="categoria">
+                            <select class="form-control"  name="categoria" id="categoria">
                                 <option>Seleccione</option>
                                 <?php
                                     $categoria = new Categoria();
                                     $categorias = $categoria->consultarTodos();
                                     foreach ($categorias as $categoriaActual) {
-                                        echo "<option value='".$categoriaActual->getIdProducto()."'>".$categoriaActual->getNombre()."</option>";
+                                        echo "<option value='".$categoriaActual->getIdCategoria()."'>".$categoriaActual->getNombre()."</option>";
                                     }
                                 ?>
                             </select>
